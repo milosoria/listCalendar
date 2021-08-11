@@ -1,9 +1,0 @@
-README.md
-setup.py
-listcalendar.egg-info/PKG-INFO
-listcalendar.egg-info/SOURCES.txt
-listcalendar.egg-info/dependency_links.txt
-listcalendar.egg-info/entry_points.txt
-listcalendar.egg-info/not-zip-safe
-listcalendar.egg-info/requires.txt
-listcalendar.egg-info/top_level.txt
