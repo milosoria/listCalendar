@@ -1,0 +1,22 @@
+##TODO :feelsgood: :
+
+	- Date 2021-09-14
+		- [ ] :boom: Summary: Fc jorge
+	- Date 2021-09-22
+		- [ ] :boom: Summary: Fc grassiela
+	- Date 2021-10-24
+		- [ ] :boom: Summary: Fc dieguii
+	- Date 2021-10-31
+		- [ ] :boom: Summary: Cumple pol
+	- Date 2021-11-05
+		- [ ] :boom: Summary: C. Soria fc
+	- Date 2021-11-06
+		- [ ] :boom: Summary: Cumple papi
+	- Date 2021-12-02
+		- [ ] :boom: Summary: Cumple dom
+	- Date 2021-12-03
+		- [ ] :boom: Summary: Cumple kuka
+	- Date 2022-03-21
+		- [ ] :boom: Summary: Fc Maxwelinho
+	- Date 2022-03-25
+		- [ ] :boom: Summary: Fc Antonito
