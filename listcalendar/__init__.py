@@ -1,5 +1,4 @@
-#! /usr/bin/env python
-from __future__ import print_function
+#!/usr/bin/env python3
 import datetime
 import os.path
 from googleapiclient.discovery import build
@@ -16,21 +15,24 @@ def main():
     Prints the start and name of the next 10 events on the user's calendar.
     """
     creds = None
+    root_dir = os.path.split(os.path.relpath(__file__))[0]
+    token_path = os.path.join(root_dir,'token.json')
+    credentials_path = os.path.join(root_dir,'credentials.json')
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    if os.path.exists(token_path):
+        creds = Credentials.from_authorized_user_file(token_path, SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                credentials_path, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open('token.json', 'w') as token:
+        with open(token_path, 'w') as token:
             token.write(creds.to_json())
 
     service = build('calendar', 'v3', credentials=creds)
@@ -42,11 +44,23 @@ def main():
                                         maxResults=10, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
-    start_dict =  {}
 
     if not events:
-        print('No upcoming events found.')
-    with open('TODO.md', 'w') as f:
+        print('No upcoming events found.\n Exiting program')
+        exit(0)
+
+    start_dict = {}
+    valid_path = False
+
+    while not valid_path:
+        todo_path = input('Path to write TODO.md (use ~ or equivalent): ').split('/')
+        todo_path = os.path.expanduser(os.path.join(*todo_path))
+        if os.path.isdir(todo_path):
+            valid_path = True 
+        else:
+            print('Please enter a valid path')
+
+    with open(f'{todo_path}/TODO.md', 'w') as f:
         f.write("##TODO :feelsgood: :\n\n")
         for event in events:
             start = event['start'].get('dateTime',
