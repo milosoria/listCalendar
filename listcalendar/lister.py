@@ -95,13 +95,13 @@ class Lister:
     def write_events(self) -> None:
 
         def write_it(writer: Any)-> None:
+            writer.write("Incoming Events:\n")
             for key, infos in start_dict.items():
                 day, month, year = key.split('-')
-                writer.write("Incoming Events:\n")
                 writer.write(
-                    f"* Date {day} of {self.months[month]} of {year}:\n")
+                    f"\t* Date {day} of {self.months[month]} of {year}:\n")
                 for info in infos:
-                    writer.write(f"\t- [ ] Summary: {info}\n")
+                    writer.write(f"\t\t- [ ] Summary: {info}\n")
 
         start_dict = OrderedDict()
         if self.events:
