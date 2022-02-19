@@ -2,3 +2,4 @@ env/
 build/
 dist/
 listcalendar.egg-info/
+listcalendar/credentials.json
