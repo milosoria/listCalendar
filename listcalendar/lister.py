@@ -104,10 +104,15 @@ class Lister:
                     writer.write(f"\t\t- [ ] '{info}'\n")
 
         start_dict = OrderedDict()
+        end_dict = OrderedDict()
         if self.events:
             for event in self.events:
                 start = event['start'].get(
                     'dateTime', event['start'].get('date')).split("T")[0]
+                
+                # TODO: add end date, if there is one
+                # end = event['end'].get(
+                #     'dateTime', event['end'].get('date')).split("T")[0]
                 if start in start_dict.keys():
                     start_dict[start].append((event['summary']))
                 else:
