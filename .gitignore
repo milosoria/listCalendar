@@ -3,3 +3,4 @@ build/
 dist/
 listcalendar.egg-info/
 listcalendar/credentials.json
+listcalendar/token.json

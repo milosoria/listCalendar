@@ -93,15 +93,26 @@ class Lister:
         self.events = events_result.get('items', [])
 
     def write_events(self) -> None:
-
-        def write_it(writer: Any)-> None:
+        def write_it(writer: Any) -> None:
             writer.write("Incoming Events:\n")
+            hasEnd = False
             for key, infos in start_dict.items():
-                year, month, day = key.split('-')
+                if key.find("+") != -1:
+                    startDate, endDate = key.split("+")
+                    year, month, day = startDate.split("-")
+                    eyear, emonth, eday = endDate.split("-")
+                    hasEnd = True
+                else:
+                    year, month, day = key.split('-')
                 writer.write(
-                    f"\t* {day} of {self.months[month]} of {year}:\n")
+                    f"\t* {day} of {self.months[month]} of {year}:\n"
+                ) if not hasEnd else writer.write(
+                    f"\t* {day} of {self.months[month]} of {year} until {eday} of {self.months[emonth]} of {eyear} :\n"
+                )
                 for info in infos:
                     writer.write(f"\t\t- [ ] '{info}'\n")
+                hasEnd = False
+
 
         start_dict = OrderedDict()
         end_dict = OrderedDict()
@@ -109,13 +120,17 @@ class Lister:
             for event in self.events:
                 start = event['start'].get(
                     'dateTime', event['start'].get('date')).split("T")[0]
-                
-                # TODO: add end date, if there is one
-                # end = event['end'].get(
-                #     'dateTime', event['end'].get('date')).split("T")[0]
+
+                end = event['end'].get('dateTime',
+                                       event['end'].get('date')).split("T")[0]
+
                 if start in start_dict.keys():
+                    if end != start:
+                        start = start + "+" + end
                     start_dict[start].append((event['summary']))
                 else:
+                    if end != start:
+                        start = start + "+" + end
                     start_dict[start] = [event['summary']]
 
             if self.format != "list":
