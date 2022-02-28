@@ -22,7 +22,7 @@ class Parser:
                 '-f',
                 '--format',
                 help=
-                "\n- .ext to write it as a file with 'ext' extension\n- list, to get it as a list (default)",
+                "\n- extension name to save the retreived events in a file with .extension\n- list, to get it as a list (default)",
                 default='list',
                 required=False)
         self.parser.add_argument(
