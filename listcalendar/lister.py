@@ -20,7 +20,7 @@ from googleapiclient.errors import UnknownApiNameOrVersion
 
 
 class Lister:
-    def __init__(self, n_months: int, n_events: int, format: str) -> None:
+    def __init__(self, n_months: int,  format: str) -> None:
         self.scopes = ['https://www.googleapis.com/auth/calendar.readonly']
         self.months = {
             "01": "January",
@@ -37,7 +37,6 @@ class Lister:
             "12": "December",
         }
         self.n_months = n_months
-        self.n_events = n_events
         self.format = format
 
     def authenticate(self) -> Any:
@@ -78,15 +77,14 @@ class Lister:
     def call_api(self, service: Any) -> None:
         # Call the Calendar API
         time_now = datetime.datetime.utcnow()
-        time_now_plus_offset = time_now + relativedelta(months=self.n_months)
+        time_now_plus_month_offset = time_now + relativedelta(months=self.n_months)
         time_now_formatted = time_now.isoformat(
         ) + 'Z'  # 'Z' indicates UTC time
 
         events_result = service.events().list(
             calendarId='primary',
             timeMin=time_now_formatted,
-            maxResults=self.n_events,
-            timeMax=time_now_plus_offset.isoformat() + 'Z',
+            timeMax=time_now_plus_month_offset.isoformat() + 'Z',
             singleEvents=True,
             orderBy='startTime').execute()
 

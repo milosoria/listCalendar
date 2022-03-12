@@ -1,3 +1,4 @@
+# TODO: number of months has no effect on event retrieving
 #!/usr/bin/env python3
 import argparse
 import sys
@@ -25,32 +26,18 @@ class Parser:
                 "\n- extension name to save the retreived events in a file with .extension\n- list, to get it as a list (default)",
                 default='list',
                 required=False)
-        self.parser.add_argument(
-                '-m',
-                '--max',
-                help="Maximum number of events to retrieve and display, default 10",
-                default = 10,
-                required=False)
 
     def handle_args(self) -> Union[Dict[str,Any], None]:
         args = vars(self.parser.parse_args())
-        parsed_args = {}
-        flags_errors = list()
+        errored = False
         if args:
             try:
                 args["number"] = int(args["number"])
             except ValueError:
                 sys.stdout.write("Number of months entered is not a valid number\n")
-                flags_errors.append("number")
-            # except KeyError:
+                errored = True
 
-            try:
-                args["max"] = int(args["max"])
-            except ValueError:
-                sys.stdout.write("Max number of events entered is not a valid number\n")
-                flags_errors.append("max")
-
-            if len(flags_errors) > 0:
-                sys.stdout.write("Program exiting due to flag errors")
-                exit(0)
-            return args
+        if errored:
+            sys.stdout.write("Program exiting due to flag errors")
+            exit(0)
+        return args
