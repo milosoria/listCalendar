@@ -5,7 +5,7 @@ from listcalendar.parser import Parser
 def main():
     parser = Parser()
     args = parser.handle_args()
-    lister = Lister(args["number"],args["max"],args["format"])
+    lister = Lister(args["number"],args["format"])
     service = lister.authenticate()
     lister.call_api(service)
     lister.write_events()

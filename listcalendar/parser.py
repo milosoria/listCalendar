@@ -1,4 +1,3 @@
-# TODO: number of months has no effect on event retrieving
 #!/usr/bin/env python3
 import argparse
 import sys
